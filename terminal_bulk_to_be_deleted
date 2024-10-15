@@ -16,8 +16,8 @@ SO I DID IT LIKE THIS IN TERMINAL:
 -- BCP PRACTICE.dbo.record_label IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\labels.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
 -- -- ## insert into artist signed with : worked
 -- BCP PRACTICE.dbo.artist_signed_with IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\artist_signed_with.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- ## insert into album_has
+-- ## insert into album_has : has duplicate primary keys
 BCP PRACTICE.dbo.album_has IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\album_has.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
-
+..... and so on
 
 tutorial i followed (ignore steps 1 & 2): https://thecodegarden.net/bulk-insert-azure-sql 
