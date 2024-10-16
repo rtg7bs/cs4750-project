@@ -357,45 +357,64 @@ INSERT INTO album (album_name, num_of_songs, duration, release_date, user_id) VA
 ('minuscule', 8, 1709554, '20110913', 89);
 
 -- playlist_contains (this should be run after playlist inserts)
--- INSERT INTO playlist_contains VALUES
--- (1, 126),
--- (1, 82),
--- (1, 197),
--- (2, 151),
--- (2, 153),
--- (2, 155),
--- (2, 179),
--- (2, 208),
--- (3, 1),
--- (3, 3),
--- (3, 4),
--- (3, 27),
--- (3, 28),
--- (4, 26),
--- (4, 29),
--- (4, 2),
--- (4, 5),
--- (4, 13),
--- (5, 296),
--- (5, 293),
--- (5, 288),
--- (5, 275),
--- (5, 351),
--- (5, 343),
--- (6, 314),
--- (6, 321),
--- (6, 329),
--- (7, 465),
--- (7, 466),
--- (7, 462),
--- (8, 152),
--- (8, 63),
--- (8, 87),
--- (9, 411),
--- (9, 387),
--- (9, 401),
--- (9, 406),
--- (10, 51),
--- (10, 53),
--- (10, 52),
--- (10, 50);
+
+-- -- ### inserting playlist : worked
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.playlist IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\playlist.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- -- ### inserting songs : worked, check dates
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.song IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\songs.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+
+INSERT INTO playlist_contains VALUES
+(1, 126),
+(1, 82),
+(1, 197),
+(2, 151),
+(2, 153),
+(2, 155),
+(2, 179),
+(2, 208),
+(3, 1),
+(3, 3),
+(3, 4),
+(3, 27),
+(3, 28),
+(4, 26),
+(4, 29),
+(4, 2),
+(4, 5),
+(4, 13),
+(5, 296),
+(5, 293),
+(5, 288),
+(5, 275),
+(5, 351),
+(5, 343),
+(6, 314),
+(6, 321),
+(6, 329),
+(7, 465),
+(7, 466),
+(7, 462),
+(8, 152),
+(8, 63),
+(8, 87),
+(9, 411),
+(9, 387),
+(9, 401),
+(9, 406),
+(10, 51),
+(10, 53),
+(10, 52),
+(10, 50);
+
+
+-- -- ### insert to record label : worked
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.record_label IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\labels.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- -- ## insert into artist signed with : worked
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.artist_signed_with IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\artist_signed_with.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- ## insert into album_has
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.album_has IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\album_has.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- ## insert into artist_performs
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.artist_performs IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\artist_performs.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- ## insert into song_belongs_to
+-- BCP PLAYLIST_PROJECT_CS4750.dbo.song_belongs_to IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\song_belongs_to.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+
