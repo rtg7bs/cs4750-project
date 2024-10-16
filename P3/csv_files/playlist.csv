@@ -1,0 +1,11 @@
+playlist_id,user_id,playlist_name,creation_date,num_of_songs,duration,description,status
+1,1,study playlist,2024-09-01,3,563309,chill study music,public
+2,1,clairo setlist,2024-09-03,5,965600,charm the residency setlist,public
+3,2,new jeans vibes,2024-09-10,5,933519,what is a bunny,public
+4,3,new jeans vibes pt. 2,2024-09-10,5,804692,idk,public
+5,3,best sza songs,2024-09-12,6,1427202,best of sza,public
+6,4,sza sped up,2024-10-01,3,468362,slay,public
+7,5,best of mamerico,2024-10-03,3,612878,best of mamerico!,private
+8,5,laufey and clairo vibes,2024-10-12,4,557688,laufey and clairo playlist,public
+9,5,gregory and the hawk playlist,2024-10-12,4,734338,gregory and the hawk type of fall,public
+10,6,best of ILLIT,2024-10-13,4,576276,this time i want...,public
