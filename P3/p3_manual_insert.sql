@@ -1,9 +1,12 @@
--- plan
+USE PLAYLIST_PROJECT_CS4750;
+GO;
+
+-- DATA FOR PLAN TABLE
 INSERT INTO [plan] (plan_name, price, [description]) VALUES 
 ('basic', 0, 'create up to 50 playlists'),
 ('premium', 4.99, 'create up to 100 playlists');
 
--- user
+-- DATA FOR USER TABLE
 INSERT INTO [user] (plan_id, username, [password], email, date_joined) VALUES 
 (1, 'user1', 'V(T@dO^1UOkyv', 'user1@gmail.com', '20241009'),
 (1, 'user2', 'R5S7Jt!J36#tF', 'user2@gmail.com', '20241009'),
@@ -95,7 +98,7 @@ INSERT INTO [user] (plan_id, username, [password], email, date_joined) VALUES
 (1, 'user88', 'KY!f&#mvg3X^L', 'user88@gmail.com', '20241009'),
 (1, 'user89', '0O&%ut^@(WMsd', 'user89@gmail.com', '20241009');
 
--- artist
+-- DATA FOR ARTIST TABLE
 INSERT INTO artist (user_id, artist_name, [description]) VALUES
 (1, 'NewJeans', 'NewJeans (MINJI, HANNI, DANIELLE, HAERIN, and HYEIN) made their debut on July 22, 2022 as the first group to debut from ADOR, an independent label under HYBE led by Hee Jin Min. The act released New Jeans on August 1, 2022, instantly captivating the global audience and becoming the first K-pop band to achieve the million-seller milestone with their debut album. One of the lead singles "Hype Boy” charted on Billboard Global 200 for 37 consecutive weeks– the longest record from any K-pop female act. Since then, a total of five tracks have marked their places on Billboard Hot 100 including global smash hits "Ditto,” "OMG,” and "Super Shy,” while their 2nd EP Get Up debuted at the top of Billboard 200. As the K-pop act to reach one billion streams on Spotify within the shortest period of time since debut, NewJeans currently holds more than 4.4 billion streams and more than 6.4 million album sales to their name. The band continues to make history with their show stopping performances, gracing the stages of Chicago’s Lollapalooza and the League of Legends World Championship Finals in 2023, both as the first K-pop female group to do so.'),
 (2, 'League of Legends', 'An internationally popular multiplayer online battle arena video game, League of Legends was created in 2009 by Riot Games. Commonly called "League," the game and its myriad offshoots include music videos, comic books, short stories, and the animated series Arcane. In 2014, Riot''s in-house music team created the virtual heavy metal group Pentakill, a League tie-in project that included cameos from Tommy Lee and Danny Lohner. The band''s 2017 album, Grasp of the Undying, was a streaming hit. K/DA, a virtual K-pop girl group, also League adjacent, was partially created to promote a skin line of the same name. The group went viral with their 2018 debut single, "Pop/Stars," which amassed millions of online views, garnering interest from listeners unfamiliar with its gaming origins. In 2019, Riot unveiled a virtual hip-hop group, True Damage, with the single "Giants." The following year saw KDA issue its debut EP, All Out, and in 2021 the company released the soundtrack for the League of Legends animated series Arcane. Riot continued to issue incidental music, themes, and remixes under the League of Legends moniker in 2022 and 2023. ~ James Christopher Monger, Rovi'),
@@ -187,7 +190,7 @@ INSERT INTO artist (user_id, artist_name, [description]) VALUES
 (88, 'Gregory and the Hawk', 'New York-based artist Meredith Godreau devised the pseudonym Gregory & the Hawk in 2003 as a means to escape the potential media stereotypes that often accompany female singer/songwriters. Godreau is equally proficient on guitar, piano, and violin, and her home recordings found an audience on the Internet, spawning numerous covers recorded by adoring fans and posted on various social websites. Her notorious D.I.Y. work ethic (she sold 15,000 albums independent of a label), which resulted in packed houses and the production of her 2007 full-length debut In Your Dreams, eventually landed her a deal with Fat Cat Records. Her debut for the label, Moenie & Kitchi, arrived in 2008, followed by Leche in 2010. ~ James Christopher Monger, Rovi'),
 (89, 'mamerico', 'Mamerico, a finest quality "utatane yuruyuru (a doze with leisurely atmosphere)” unit is formed with two artists, maya (composer, guitar, vocal) and kazuma yano (lyrics, design, produce). Based in the Kansai district, Japan. The debut album "minuscule” produced by Swedish singer-songwriter Johan Christher Schütz, brings back a peaceful subtle nostalgic feelings on the daily life in Europe, Japan, or across the border.');
 
--- genre
+-- DATA FOR GENRE TABLE
 INSERT INTO genre VALUES
 ('k-pop'),
 ('k-pop girl group'),
@@ -300,7 +303,7 @@ INSERT INTO genre VALUES
 ('folk-pop'),
 ('japanese indie folk');
 
--- album
+-- DATA FOR ALBUM TABLE
 INSERT INTO album (album_name, num_of_songs, duration, release_date, user_id) VALUES
 ('NJWMX', 12, 2554692, '20231219', 1),
 ('Supernatural', 4, 702826, '20240621', 1),
@@ -356,65 +359,68 @@ INSERT INTO album (album_name, num_of_songs, duration, release_date, user_id) VA
 ('homemade', 8, 1742737, '20220514', 89),
 ('minuscule', 8, 1709554, '20110913', 89);
 
--- playlist_contains (this should be run after playlist inserts)
+-- DATA FOR RECORD_LABEL TABLE
+INSERT INTO record_label(label_name, headquarters, founding_year) VALUES 
+('ADOR', 'Seoul, South Korea', 2021),
+('BELIFT LAB', 'Seoul, South Korea', 2018),
+('AWAL Recordings America, Inc.', 'London, UK', 1997),
+('Sub Pop Records', 'Seattle, USA', 1988),
+('Top Dawg Entertainment/RCA Records', 'Carson City, USA', 2004),
+('1414428 Records DK (DistroKid)', 'New York, USA', 2013);
 
--- -- ### inserting playlist : worked
--- BCP PLAYLIST_PROJECT_CS4750.dbo.playlist IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\playlist.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- -- ### inserting songs : worked, check dates
--- BCP PLAYLIST_PROJECT_CS4750.dbo.song IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\songs.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
+-- DATA FOR PLAYLIST TABLE
+INSERT INTO playlist(user_id, playlist_name,  creation_date, num_of_songs, duration, description, status) VALUES 
+(1, 'study playlist', '2024-09-01', 3, 563309, 'chill study music', 'public'),
+(1, 'clairo setlist', '2024-09-03', 5, 965600, 'charm the residency setlist', 'public'),
+(2, 'new jeans vibes', '2024-09-10', 5, 933519, 'what is a bunny', 'public'),
+(3, 'new jeans vibes pt. 2', '2024-09-10', 5, 804692, 'idk', 'public'), 
+(3, 'best sza songs', '2024-09-12', 6, 1427202, 'best of sza', 'public'),
+(4, 'sza sped up', '2024-10-01', 3, 468362, 'slay', 'public'), 
+(5, 'best of mamerico', '2024-10-03', 3, 612878, 'best of mamerico!', 'private'),
+(5, 'laufey and clairo vibes', '2024-10-12', 4, 557688, 'laufey and clairo playlist', 'public'), 
+(5, 'gregory and the hawk playlist', '2024-10-12', 4, 734338, 'gregory and the hawk type of fall', 'public'), 
+(6, 'best of ILLIT', '2024-10-13', 4, 576276, 'this time i want...', 'public');
 
-INSERT INTO playlist_contains VALUES
-(1, 126),
-(1, 82),
-(1, 197),
-(2, 151),
-(2, 153),
-(2, 155),
-(2, 179),
-(2, 208),
-(3, 1),
-(3, 3),
-(3, 4),
-(3, 27),
-(3, 28),
-(4, 26),
-(4, 29),
-(4, 2),
-(4, 5),
-(4, 13),
-(5, 296),
-(5, 293),
-(5, 288),
-(5, 275),
-(5, 351),
-(5, 343),
-(6, 314),
-(6, 321),
-(6, 329),
-(7, 465),
-(7, 466),
-(7, 462),
-(8, 152),
-(8, 63),
-(8, 87),
-(9, 411),
-(9, 387),
-(9, 401),
-(9, 406),
-(10, 51),
-(10, 53),
-(10, 52),
-(10, 50);
-
-
--- -- ### insert to record label : worked
--- BCP PLAYLIST_PROJECT_CS4750.dbo.record_label IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\labels.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- -- ## insert into artist signed with : worked
--- BCP PLAYLIST_PROJECT_CS4750.dbo.artist_signed_with IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\artist_signed_with.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- ## insert into album_has
--- BCP PLAYLIST_PROJECT_CS4750.dbo.album_has IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\album_has.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- ## insert into artist_performs
--- BCP PLAYLIST_PROJECT_CS4750.dbo.artist_performs IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\artist_performs.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
--- ## insert into song_belongs_to
--- BCP PLAYLIST_PROJECT_CS4750.dbo.song_belongs_to IN C:\Users\ytkid\OneDrive\Desktop\cs_4750_project\csv_files\song_belongs_to.csv -S localhost\SQLEXPRESS -T -c -t, -r\n
-
+-- DATA FOR PLAYLIST_CONTAINS (RUN AFTER INSERTING DATA FOR PLAYLISTS AND SONGS)
+-- INSERT INTO playlist_contains VALUES
+-- (1, 126),
+-- (1, 82),
+-- (1, 197),
+-- (2, 151),
+-- (2, 153),
+-- (2, 155),
+-- (2, 179),
+-- (2, 208),
+-- (3, 1),
+-- (3, 3),
+-- (3, 4),
+-- (3, 27),
+-- (3, 28),
+-- (4, 26),
+-- (4, 29),
+-- (4, 2),
+-- (4, 5),
+-- (4, 13),
+-- (5, 296),
+-- (5, 293),
+-- (5, 288),
+-- (5, 275),
+-- (5, 351),
+-- (5, 343),
+-- (6, 314),
+-- (6, 321),
+-- (6, 329),
+-- (7, 465),
+-- (7, 466),
+-- (7, 462),
+-- (8, 152),
+-- (8, 63),
+-- (8, 87),
+-- (9, 411),
+-- (9, 387),
+-- (9, 401),
+-- (9, 406),
+-- (10, 51),
+-- (10, 53),
+-- (10, 52),
+-- (10, 50);
