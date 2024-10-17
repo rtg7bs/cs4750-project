@@ -1,5 +1,5 @@
-USE PLAYLIST_PROJECT_CS4750;
-GO;
+USE PLAYLIST_PROJECT_CS4750
+GO
 
 /* For all of the following, the 'SQL Server Import' extension was used to import data from local CSV files into temp tables, 
 then the data in these temp tables were inserted into the tables that we manually created with column types and constraints
