@@ -31,15 +31,18 @@ SET encrypted_password = EncryptByKey(Key_GUID('UserKey'), password);
 
 CLOSE SYMMETRIC KEY UserKey;
 
--- Remove the og password col (so that we only have the og_password_backup col and encrypted_password col)
+-- Remove the og password col and the og_password_backup col (leaving only the encrypted_password col)
 ALTER TABLE [user]
 DROP COLUMN [password];
 
+ALTER TABLE [user]
+DROP COLUMN og_password_backup;
+
 -- EXTRA: Decrypt passwords in the encrypted_password col
--- OPEN SYMMETRIC KEY UserKey
--- DECRYPTION BY CERTIFICATE UserCert;
+OPEN SYMMETRIC KEY UserKey
+DECRYPTION BY CERTIFICATE UserCert;
 
--- SELECT username, CONVERT(VARCHAR(254), DecryptByKey(encrypted_password)) AS [password]
--- FROM [user];
+SELECT username, CONVERT(VARCHAR(254), DecryptByKey(encrypted_password)) AS [password]
+FROM [user];
 
--- CLOSE SYMMETRIC KEY UserKey;
+CLOSE SYMMETRIC KEY UserKey;
