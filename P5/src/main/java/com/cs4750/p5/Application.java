@@ -1,4 +1,4 @@
-package com.p5.springboot;
+package com.cs4750.p5;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
