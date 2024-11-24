@@ -20,7 +20,7 @@ public class Artist {
 
     Artist() {}
 
-    Artist(int userId, String artistName, String description) {
+    Artist(Integer userId, String artistName, String description) {
         this.userId = userId;
         this.artistName = artistName;
         this.description = description;
