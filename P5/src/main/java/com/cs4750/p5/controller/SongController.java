@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +27,10 @@ public class SongController {
             List<Song> songs = new ArrayList<>();
 
             if (title == null) { // i dont think a title can be null, but followingh her code
-                songRepository.findAll().forEach(songs::add);
+                songs.addAll(songRepository.findAll());
             }
             else {
-                songRepository.findByTitleContaining(title).forEach(songs::add);
+                songs.addAll(songRepository.findByTitleContaining(title));
             }
             if (songs.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -42,22 +43,24 @@ public class SongController {
     }
 
     @GetMapping("/songs/{id}")
-    public ResponseEntity<Song> getSongById(@PathVariable("id") long id) {
+    public ResponseEntity<Song> getSongById(@PathVariable("id") Integer id) {
         Optional<Song> songData = songRepository.findById(id);
 
-        if (songData.isPresent()) {
-            return new ResponseEntity<>(songData.get(), HttpStatus.OK); // Song found, return with OK
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Song not found, return NOT_FOUND
-        }
+//        if (songData.isPresent()) {
+//            return new ResponseEntity<>(songData.get(), HttpStatus.OK); // Song found, return with OK
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Song not found, return NOT_FOUND
+//        }
+        // Song found, return with OK
+        // Song not found, return NOT_FOUND
+        return songData.map(song -> new ResponseEntity<>(song, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/songs")
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
         try {
             Song _song = songRepository
-                    .save(new Song(song.getTitle(), song.getDuration(), song.getReleaseDate()));
-
+                    .save(new Song(song.getSongId(), song.getTitle(), song.getDuration(), song.getReleaseDate()));
             return new ResponseEntity<>(_song, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,7 +68,7 @@ public class SongController {
     }
 
     @PutMapping("/songs/{id}")
-    public ResponseEntity<Song> updateSong(@PathVariable("id") long id, @RequestBody Song song) {
+    public ResponseEntity<Song> updateSong(@PathVariable("id") Integer id, @RequestBody Song song) {
         Optional<Song> songData = songRepository.findById(id);
 
         if (songData.isPresent()) {
