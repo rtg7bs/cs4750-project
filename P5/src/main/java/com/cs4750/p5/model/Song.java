@@ -2,7 +2,7 @@ package com.cs4750.p5.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import javax.validation.constraints.Min;
+//import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Entity
@@ -17,7 +17,7 @@ public class Song {
     @Column(name = "title", nullable = false, length = 254)
     private String title;
 
-    @Min(1)
+//    @Min(1)
     @Column(name = "duration")
     private Integer duration;
 
