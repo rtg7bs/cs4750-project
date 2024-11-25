@@ -4,11 +4,11 @@ import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="user")
+@Table(name="[user]")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="user_id")
     private Integer id;
 
     @Column(name="plan_id")
@@ -27,8 +27,7 @@ public class User {
     private Date dateJoined;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Artist artist;
+    Artist artist;
 
     // add fkey mapping for planid if implemented (hard-coded default plan_id = 1 for now)
 
