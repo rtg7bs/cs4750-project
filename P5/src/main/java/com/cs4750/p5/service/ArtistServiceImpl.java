@@ -16,7 +16,7 @@ public class ArtistServiceImpl implements ArtistService {
     private ArtistRepository repository;
 
     public ResponseEntity<Artist> createArtist(Artist artist) {
-        
+        return null;
     }
 
     public ResponseEntity<Artist> getArtist(Integer userId) {
@@ -30,10 +30,10 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     public ResponseEntity<Artist> updateArtist(Integer userId, Artist artist) {
-
+        return null;
     }
 
     public ResponseEntity<Artist> deleteArtist(Integer userId) {
-
+        return null;
     }
 }
