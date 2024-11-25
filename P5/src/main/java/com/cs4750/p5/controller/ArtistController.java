@@ -3,6 +3,7 @@ package com.cs4750.p5.controller;
 import com.cs4750.p5.entity.Artist;
 import com.cs4750.p5.service.ArtistService;
 
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class ArtistController {
 	@PostMapping("/create")
 	public ResponseEntity<Artist> createArtist(@RequestBody Artist artist) {
 		return service.createArtist(artist);
+	}
+
+	@GetMapping("")
+	public ResponseEntity<List<Artist>> getAllArtists() {
+		return service.getAllArtists();
 	}
 
 	@GetMapping("/{userId}")

@@ -1,6 +1,7 @@
 package com.cs4750.p5.service;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,18 @@ public class ArtistServiceImpl implements ArtistService {
     private ArtistRepository repository;
 
     public ResponseEntity<Artist> createArtist(Artist artist) {
-        return null;
+        try {
+            repository.save(artist);
+            return new ResponseEntity<>(artist, HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Artist>> getAllArtists() {
+        List<Artist> artistList = repository.findAll();
+        return new ResponseEntity<>(artistList, HttpStatus.OK);
     }
 
     public ResponseEntity<Artist> getArtist(Integer userId) {
