@@ -8,8 +8,7 @@ import jakarta.persistence.*;
 @Table(name="artist")
 public class Artist {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id", nullable=false)
+    @Column(name="user_id")
     private Integer userId;
 
     @Column(name="artist_name")
@@ -17,6 +16,11 @@ public class Artist {
 
     @Column(name="description")    
     private String description;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
 
     Artist() {}
 
