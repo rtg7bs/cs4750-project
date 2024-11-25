@@ -1,6 +1,7 @@
 package com.cs4750.p5.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +25,21 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
     
-    public ResponseEntity<User> getUser(Integer id) {
+    public ResponseEntity<User> getUser(Integer userId) {
+        Optional<User> userData = repository.findById(userId);
+        if (userData.isPresent()) {
+            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<User> updateUser(Integer userId, User user) {
         return null;
     }
 
-    public ResponseEntity<User> updateUser(Integer id, User user) {
-        return null;
-    }
-
-    public ResponseEntity<User> deleteUser(Integer id) {
+    public ResponseEntity<User> deleteUser(Integer userId) {
         return null;
     }
 }
