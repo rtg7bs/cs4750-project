@@ -2,6 +2,7 @@ package com.cs4750.p5.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     public ResponseEntity<User> createUser(User user) {
-        return null;
+        try {
+            // user.setDateJoined(LocalDate.now());
+            repository.save(new User(user.getPlanId(), user.getUsername(), user.getPassword(), user.getEmail(), LocalDate.now()));
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<List<User>> getAllUsers() {

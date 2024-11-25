@@ -1,6 +1,9 @@
 package com.cs4750.p5.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,18 +26,29 @@ public class User {
     @Column(name="email")
     private String email;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name="date_joined")
-    private Date dateJoined;
+    private LocalDate dateJoined;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     Artist artist;
 
     // add fkey mapping for planid if implemented (hard-coded default plan_id = 1 for now)
 
     User() {}
 
-    User(Integer id, Integer planId, String username, String password, String email, Date dateJoined) {
+    User(Integer id, Integer planId, String username, String password, String email, LocalDate dateJoined) {
         this.id = id;
+        this.planId = planId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.dateJoined = dateJoined;
+    }
+
+    public User(Integer planId, String username, String password, String email, LocalDate dateJoined) {
         this.planId = planId;
         this.username = username;
         this.password = password;
@@ -82,11 +96,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getDateJoined() {
+    public LocalDate getDateJoined() {
         return dateJoined;
     }
 
-    public void setDateJoined(Date dateJoined) {
+    public void setDateJoined(LocalDate dateJoined) {
         this.dateJoined = dateJoined;
     }
 
