@@ -59,6 +59,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseEntity<User> deleteUser(Integer userId) {
-        return null;
+        try {
+            repository.deleteById(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
