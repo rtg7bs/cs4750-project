@@ -33,15 +33,35 @@ public class Artist {
       return "Artist{" + "user_id=" + this.userId + ", artist_name='" + this.artistName + '\'' + ", description='" + this.description + '\'' + '}';
     }
 
+    public Integer getUserId() {
+      return userId;
+    }
+
+    public void setUserId(Integer userId) {
+      this.userId = userId;
+    }
+
     public User getUser() {
       return user;
+    }
+
+    public void setUser(User user) {
+      this.user = user;
     }
 
     public String getArtistName() {
       return artistName;
     }
 
+    public void setArtistName(String artistName) {
+      this.artistName = artistName;
+    }
+
     public String getDescription() {
       return description;
+    }
+
+    public void setDescription(String description) {
+      this.description = description;
     }
 }
