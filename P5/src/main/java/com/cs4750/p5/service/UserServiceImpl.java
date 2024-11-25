@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
 
     public ResponseEntity<User> createUser(User user) {
         try {
-            // user.setDateJoined(LocalDate.now());
-            repository.save(new User(user.getPlanId(), user.getUsername(), user.getPassword(), user.getEmail(), LocalDate.now()));
+            user.setDateJoined(LocalDate.now());
+            repository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
         catch (Exception e) {
@@ -44,7 +44,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseEntity<User> updateUser(Integer userId, User user) {
-        return null;
+        Optional<User> userData = repository.findById(userId);
+        if (userData.isPresent()) {
+            User oldUser = userData.get();
+            oldUser.setPlanId(user.getPlanId());
+            oldUser.setUsername(user.getUsername());
+            oldUser.setPassword(user.getPassword());
+            oldUser.setEmail(user.getEmail());
+            return new ResponseEntity<>(repository.save(oldUser), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<User> deleteUser(Integer userId) {
