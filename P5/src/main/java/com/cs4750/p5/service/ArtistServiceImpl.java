@@ -66,6 +66,12 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     public ResponseEntity<Artist> deleteArtist(Integer userId) {
-        return null;
+        try {
+            repository.deleteById(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

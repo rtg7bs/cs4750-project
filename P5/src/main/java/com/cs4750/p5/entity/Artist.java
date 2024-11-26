@@ -14,7 +14,7 @@ public class Artist {
     @Column(name="description")    
     private String description;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     @MapsId("userId")
     private User user;
