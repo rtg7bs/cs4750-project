@@ -53,7 +53,16 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     public ResponseEntity<Artist> updateArtist(Integer userId, Artist artist) {
-        return null;
+        Optional<Artist> artistData = repository.findById(userId);
+        if (artistData.isPresent()) {
+            Artist oldArtist = artistData.get();
+            oldArtist.setArtistName(artist.getArtistName());
+            oldArtist.setDescription(artist.getDescription());
+            return new ResponseEntity<>(repository.save(oldArtist), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<Artist> deleteArtist(Integer userId) {
