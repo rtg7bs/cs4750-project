@@ -1,7 +1,7 @@
 package com.cs4750.p5.entity;
 
 import jakarta.persistence.*;
-import scala.collection.immutable.List;
+import java.util.List;
 
 @Entity
 @Table(name="artist")
