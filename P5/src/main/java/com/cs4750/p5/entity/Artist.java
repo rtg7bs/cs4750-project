@@ -8,16 +8,16 @@ public class Artist {
     @Id
     private Integer userId;
 
-    @OneToOne()
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
-    @MapsId("userId")
-    private User user;
-
     @Column(name="artist_name")
     private String artistName;
 
     @Column(name="description")    
     private String description;
+
+    @OneToOne()
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @MapsId("userId")
+    private User user;
 
     Artist() {}
 
