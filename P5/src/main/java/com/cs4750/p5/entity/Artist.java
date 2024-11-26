@@ -1,6 +1,7 @@
 package com.cs4750.p5.entity;
 
 import jakarta.persistence.*;
+import scala.collection.immutable.List;
 
 @Entity
 @Table(name="artist")
@@ -18,6 +19,9 @@ public class Artist {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     @MapsId("userId")
     private User user;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL) // referenced by Album entity
+    private List<Album> albums;
 
     Artist() {}
 
@@ -63,5 +67,13 @@ public class Artist {
 
     public void setDescription(String description) {
       this.description = description;
+    }
+
+    public List<Album> getAlbums() {
+      return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+      this.albums = albums;
     }
 }
