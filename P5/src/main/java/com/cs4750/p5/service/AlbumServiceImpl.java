@@ -76,6 +76,17 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public ResponseEntity<Album> deleteAlbum(Integer albumId) {
+        try {
+            Optional<Album> albumData = albumRepository.findById(albumId);
+            if (albumData.isPresent()) {
+                albumRepository.deleteById(albumId);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 }

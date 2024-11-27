@@ -36,4 +36,8 @@ public class AlbumController {
         return service.updateAlbum(albumId, newAlbum);
     }
 
+    @DeleteMapping("/delete/{albumId}")
+    public ResponseEntity<Album> deleteAlbum(@PathVariable Integer albumId) { 
+        return service.deleteAlbum(albumId);
+    }
 }
