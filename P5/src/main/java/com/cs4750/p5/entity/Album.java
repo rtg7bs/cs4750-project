@@ -11,10 +11,6 @@ public class Album {
     @Column(name = "album_id")
     private Integer albumId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // user_id col in album tb references user_id col in artist tb
-    private Artist artist;
-
     @Column(name = "album_name")
     private String albumName;
 
@@ -28,6 +24,10 @@ public class Album {
     @Temporal(TemporalType.DATE)
     @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // user_id col in album tb references user_id col in artist tb
+    private Artist artist;
 
     Album() {}
 

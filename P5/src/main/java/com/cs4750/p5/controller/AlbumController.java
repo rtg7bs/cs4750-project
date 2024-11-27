@@ -21,5 +21,17 @@ public class AlbumController {
         return service.createAlbum(album, user_id);
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<Album>> getAllAlbums() {
+        return service.getAllAlbums();
+    }
+
+    @GetMapping("/{albumId}")
+    public ResponseEntity<Album> getAlbum(@PathVariable Integer albumId) { 
+        return service.getAlbum(albumId);
+    }
+
+
+
     
 }

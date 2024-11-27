@@ -40,13 +40,27 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public ResponseEntity<List<Album>> getAllAlbums() {
+        try {
+            List<Album> albumList = albumRepository.findAll();
+            if (albumList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
 
+            return new ResponseEntity<List<Album>>(albumList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Album> getAlbum(Integer albumId) {
-
-
+        Optional<Album> albumData = albumRepository.findById(albumId);
+        if (albumData.isPresent()) {
+            return new ResponseEntity<>(albumData.get(), HttpStatus.OK);
+        } else {
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
     }
+    
     public ResponseEntity<Album> updateArtist(Integer albumId, Album album) {
 
     }
