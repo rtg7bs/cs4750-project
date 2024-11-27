@@ -3,10 +3,13 @@ package com.cs4750.p5.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="artist")
 public class Artist {
     @Id
+    @Column(name="user_id")
     private Integer userId;
 
     @Column(name="artist_name")
@@ -15,12 +18,13 @@ public class Artist {
     @Column(name="description")    
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     @MapsId("userId")
     private User user;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL) // referenced by Album entity
+    @JsonBackReference
     private List<Album> albums;
 
     Artist() {}
