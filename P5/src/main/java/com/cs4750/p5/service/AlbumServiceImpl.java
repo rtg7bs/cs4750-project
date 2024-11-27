@@ -60,12 +60,22 @@ public class AlbumServiceImpl implements AlbumService {
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
     }
-    
-    public ResponseEntity<Album> updateArtist(Integer albumId, Album album) {
 
+    public ResponseEntity<Album> updateAlbum(Integer albumId, Album newAlbum) {
+        Optional<Album> albumData = albumRepository.findById(albumId);
+        if (albumData.isPresent()) {
+            Album oldAlbum = albumData.get();
+            oldAlbum.setAlbumName(newAlbum.getAlbumName());
+            oldAlbum.setNumOfSongs(newAlbum.getNumOfSongs());
+            oldAlbum.setDuration(newAlbum.getDuration());
+            oldAlbum.setReleaseDate(newAlbum.getReleaseDate());
+            return new ResponseEntity<>(albumRepository.save(oldAlbum), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    public ResponseEntity<Album> deleteArtist(Integer albumId) {
+    public ResponseEntity<Album> deleteAlbum(Integer albumId) {
 
     }
 }

@@ -31,7 +31,9 @@ public class AlbumController {
         return service.getAlbum(albumId);
     }
 
+    @PutMapping("/update/{albumId}")
+    public ResponseEntity<Album> updateAlbum(@PathVariable Integer albumId, @RequestBody Album newAlbum) { 
+        return service.updateAlbum(albumId, newAlbum);
+    }
 
-
-    
 }

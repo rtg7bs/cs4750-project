@@ -7,6 +7,6 @@ public interface AlbumService {
     public abstract ResponseEntity<Album> createAlbum(Album album, Integer user_Id);
     public abstract ResponseEntity<List<Album>> getAllAlbums();
     public abstract ResponseEntity<Album> getAlbum(Integer albumId);
-    public abstract ResponseEntity<Album> updateArtist(Integer albumId, Album album);
-    public abstract ResponseEntity<Album> deleteArtist(Integer albumId);
+    public abstract ResponseEntity<Album> updateAlbum(Integer albumId, Album album);
+    public abstract ResponseEntity<Album> deleteAlbum(Integer albumId);
 }
