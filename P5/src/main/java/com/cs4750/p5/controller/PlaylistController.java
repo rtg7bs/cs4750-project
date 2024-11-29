@@ -1,0 +1,47 @@
+package com.cs4750.p5.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.cs4750.p5.entity.Playlist;
+import com.cs4750.p5.service.PlaylistService;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/playlist")
+public class PlaylistController {
+
+    private final PlaylistService service;
+    PlaylistController(PlaylistService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
+        return service.createPlaylist(playlist);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Playlist>> getAllPlaylists() {
+        return service.getAllPlaylists();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Playlist> getPlaylist(@PathVariable("id") Integer id) {
+        return service.getPlaylist(id);
+    }
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Playlist> updatePlaylist(@PathVariable("id") Integer id, @RequestBody Playlist playlist) {
+       return service.updatePlaylist(id, playlist);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Playlist> deletePlaylist(@PathVariable("id") Integer id) {
+        return service.deletePlaylist(id);
+    }
+
+}
