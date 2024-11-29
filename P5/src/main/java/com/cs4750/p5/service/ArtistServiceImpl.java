@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.cs4750.p5.entity.Album;
 import com.cs4750.p5.entity.Artist;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.entity.User;
 import com.cs4750.p5.repository.ArtistRepository;
 import com.cs4750.p5.repository.UserRepository;
@@ -49,6 +51,32 @@ public class ArtistServiceImpl implements ArtistService {
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<List<Song>> getArtistSongs(Integer userId) {
+        try {
+            Optional<Artist> artistData = repository.findById(userId);
+            if (artistData.isPresent()) {
+                return new ResponseEntity<>(artistData.get().getSongs(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Album>> getArtistAlbums(Integer userId) {
+        try {
+            Optional<Artist> artistData = repository.findById(userId);
+            if (artistData.isPresent()) {
+                return new ResponseEntity<>(artistData.get().getAlbums(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

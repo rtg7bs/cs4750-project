@@ -1,9 +1,12 @@
 package com.cs4750.p5.entity;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="artist")
@@ -25,7 +28,16 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL) // referenced by Album entity
     @JsonBackReference
-    private List<Album> albums;
+    private List<Album> albums = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "artist_performs",
+        joinColumns = @JoinColumn(name = "user_id"), // joinColumns refers to fkey cols in the cur entity
+        inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
+    )
+    @JsonIgnore
+    private List<Song> songs = new ArrayList<>();
 
     Artist() {}
 
@@ -79,5 +91,13 @@ public class Artist {
 
     public void setAlbums(List<Album> albums) {
       this.albums = albums;
+    }
+
+    public List<Song> getSongs() {
+      return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+      this.songs = songs;
     }
 }
