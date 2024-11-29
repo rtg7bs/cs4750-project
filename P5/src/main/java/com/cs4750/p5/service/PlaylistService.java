@@ -13,4 +13,6 @@ public interface PlaylistService {
     public abstract ResponseEntity<List<Song>> getPlaylistSongs(Integer id);
     public abstract ResponseEntity<Playlist> updatePlaylist(Integer id, Playlist playlist);
     public abstract ResponseEntity<Playlist> deletePlaylist(Integer id);
+    public abstract ResponseEntity<Playlist> addSongToPlaylist(Integer playlistId, Integer songId);
+    public abstract ResponseEntity<Playlist> deleteSongFromPlaylist(Integer playlistId, Integer songId);
 }

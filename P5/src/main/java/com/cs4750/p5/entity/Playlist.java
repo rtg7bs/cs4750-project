@@ -1,10 +1,11 @@
 package com.cs4750.p5.entity;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "playlist")
@@ -47,7 +48,7 @@ public class Playlist {
         joinColumns = @JoinColumn(name = "playlist_id"), // joinColumns refers to fkey cols in the cur entity
         inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
     )
-    private List<Song> songs;
+    private List<Song> songs = new ArrayList<>();
 
     public Playlist() {
 

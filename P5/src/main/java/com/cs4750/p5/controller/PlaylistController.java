@@ -48,4 +48,13 @@ public class PlaylistController {
         return service.deletePlaylist(id);
     }
 
+    @PutMapping("/{playlistId}/add/{songId}")
+    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable Integer playlistId, @PathVariable Integer songId) { 
+        return service.addSongToPlaylist(playlistId, songId);
+    }
+
+    @PutMapping("/{playlistId}/delete/{songId}")
+    public ResponseEntity<Playlist> deleteSongFromPlaylist(@PathVariable Integer playlistId, @PathVariable Integer songId) { 
+        return service.deleteSongFromPlaylist(playlistId, songId);
+    }
 }
