@@ -1,4 +1,4 @@
-package com.cs4750.p5.model;
+package com.cs4750.p5.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

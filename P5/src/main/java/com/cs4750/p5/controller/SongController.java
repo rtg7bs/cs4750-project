@@ -1,6 +1,6 @@
 package com.cs4750.p5.controller;
 
-import com.cs4750.p5.model.Song;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.repository.SongRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
