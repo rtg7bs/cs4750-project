@@ -30,11 +30,11 @@ public class Song {
     @Column(name = "release_date", nullable = false)
     private Date releaseDate;
 
-    @ManyToMany(mappedBy = "playlist_songs") // referenced by Playlist entity
+    @ManyToMany(mappedBy = "playlistSongs") // referenced by Playlist entity
     @JsonIgnore
     private List<Playlist> playlists = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "album_songs") // referenced by Album entity
+    @ManyToMany(mappedBy = "albumSongs") // referenced by Album entity
     @JsonIgnore
     private List<Album> albums = new ArrayList<>();
 

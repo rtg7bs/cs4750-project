@@ -52,11 +52,11 @@ public class Playlist {
         inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
     )
     @JsonIgnore
-    private List<Song> playlist_songs = new ArrayList<>();
+    private List<Song> playlistSongs = new ArrayList<>();
 
     public Playlist() {}
 
-    public Playlist(Integer playlistId, Integer userId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status, List<Song> playlist_songs) {
+    public Playlist(Integer playlistId, Integer userId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status, List<Song> playlistSongs) {
         this.playlistId = playlistId;
         this.userId = userId;
         this.playlistName = playlistName;
@@ -65,7 +65,7 @@ public class Playlist {
         this.duration = duration;
         this.description = description;
         this.status = status;
-        this.playlist_songs = playlist_songs;
+        this.playlistSongs = playlistSongs;
     }
 
     // getters and setters
@@ -101,9 +101,9 @@ public class Playlist {
 
     public void setStatus(String status) { this.status = status; }
 
-    public List<Song> getPlaylistSongs() { return playlist_songs; }
+    public List<Song> getPlaylistSongs() { return playlistSongs; }
 
-    public void setPlaylistSongs(List<Song> songs) { this.playlist_songs = songs; }
+    public void setPlaylistSongs(List<Song> songs) { this.playlistSongs = songs; }
 
     @Override
     public String toString() {

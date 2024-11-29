@@ -43,18 +43,18 @@ public class Album {
         inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
     )
     @JsonIgnore
-    private List<Song> album_songs = new ArrayList<>();
+    private List<Song> albumSongs = new ArrayList<>();
 
     Album() {}
 
-    Album(Integer albumId, String albumName, Integer numOfSongs, Integer duration, LocalDate releaseDate, Artist artist, List<Song> album_songs) {
+    Album(Integer albumId, String albumName, Integer numOfSongs, Integer duration, LocalDate releaseDate, Artist artist, List<Song> albumSongs) {
         this.albumId = albumId;
         this.albumName = albumName;
         this.numOfSongs = numOfSongs;
         this.duration = duration;
         this.releaseDate = releaseDate;
         this.artist = artist;
-        this.album_songs = album_songs;
+        this.albumSongs = albumSongs;
     }
 
     public Integer getAlbumId() {
@@ -106,10 +106,10 @@ public class Album {
     }
 
     public List<Song> getAlbumSongs() {
-        return album_songs;
+        return albumSongs;
     }
 
     public void setAlbumSongs(List<Song> songs) {
-        this.album_songs = songs;
+        this.albumSongs = songs;
     }
 }
