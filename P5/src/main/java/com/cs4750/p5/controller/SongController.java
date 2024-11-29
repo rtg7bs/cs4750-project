@@ -26,8 +26,8 @@ public class SongController {
         }
 
 
-        @PostMapping("/create/{user_id}")
-        public ResponseEntity<Song> createSong(@RequestBody Song song) { // , @PathVariable Integer user_id
+        @PostMapping("/create")
+        public ResponseEntity<Song> createSong(@RequestBody Song song) { 
             return service.createSong(song);
         }
 
