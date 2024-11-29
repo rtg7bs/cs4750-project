@@ -38,16 +38,14 @@ public class SongServiceImpl implements SongService {
 
 
     @Override
-    public ResponseEntity<Song> createSong(Song song) { // our db doesnt refernece artist in song table, idk if is hsould still have it becaus eof the song belongs to db
+    public ResponseEntity<Song> createSong(Song song) { 
         try {
-            Song _song = songRepository.save(new Song(song.getSongId(), song.getTitle(), song.getDuration(), song.getReleaseDate()));
+            Song _song = songRepository.save(song);
             return new ResponseEntity<>(_song, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     @Override
     public ResponseEntity<Song> updateSong(Integer id, Song song) {
@@ -64,8 +62,6 @@ public class SongServiceImpl implements SongService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
 
     @Override
     public ResponseEntity<Song> deleteSong(Integer id) {
