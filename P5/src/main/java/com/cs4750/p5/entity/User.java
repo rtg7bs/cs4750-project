@@ -21,7 +21,7 @@ public class User {
     private String username;
 
     @Column(name="encrypted_password")
-    private String password;
+    private byte[] password;
 
     @Column(name="email")
     private String email;
@@ -39,7 +39,7 @@ public class User {
 
     User() {}
 
-    User(Integer userId, Integer planId, String username, String password, String email, LocalDate dateJoined) {
+    User(Integer userId, Integer planId, String username, byte[] password, String email, LocalDate dateJoined) {
         this.userId = userId;
         this.planId = planId;
         this.username = username;
@@ -48,7 +48,7 @@ public class User {
         this.dateJoined = dateJoined;
     }
 
-    public User(Integer planId, String username, String password, String email, LocalDate dateJoined) {
+    public User(Integer planId, String username, byte[] password, String email, LocalDate dateJoined) {
         this.planId = planId;
         this.username = username;
         this.password = password;
@@ -80,11 +80,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
