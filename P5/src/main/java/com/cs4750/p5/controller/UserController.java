@@ -1,5 +1,6 @@
 package com.cs4750.p5.controller;
 
+import com.cs4750.p5.entity.Playlist;
 import com.cs4750.p5.entity.User;
 import com.cs4750.p5.service.UserService;
 
@@ -30,6 +31,11 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUser(@PathVariable Integer id) {
 		return service.getUser(id);
+	}
+
+	@GetMapping("/{id}/playlists")
+	public ResponseEntity<List<Playlist>> getUserPlaylists(@PathVariable Integer id) { 
+		return service.getUserPlaylists(id);
 	}
 
 	@PutMapping("/update/{id}")

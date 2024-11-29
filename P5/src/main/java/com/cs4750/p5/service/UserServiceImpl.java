@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.cs4750.p5.entity.Playlist;
 import com.cs4750.p5.entity.User;
 import com.cs4750.p5.repository.UserRepository;
 
@@ -40,6 +41,19 @@ public class UserServiceImpl implements UserService {
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<List<Playlist>> getUserPlaylists(Integer userId) {
+        try {
+            Optional<User> userData = repository.findById(userId);
+            if (userData.isPresent()) {
+                return new ResponseEntity<>(userData.get().getPlaylists(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.cs4750.p5.entity.Playlist;
 import com.cs4750.p5.entity.Song;
+import com.cs4750.p5.entity.User;
 import com.cs4750.p5.repository.PlaylistRepository;
 import com.cs4750.p5.repository.SongRepository;
+import com.cs4750.p5.repository.UserRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private PlaylistRepository playlistRepo;
@@ -22,11 +26,20 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Autowired
     private SongRepository songRepo; 
 
-    public ResponseEntity<Playlist> createPlaylist(Playlist playlist) {
+    public ResponseEntity<Playlist> createPlaylist(Playlist playlist, Integer userId) {
         try {
-            Playlist _playlist = playlistRepo.save(playlist);
-            return new ResponseEntity<>(_playlist, HttpStatus.CREATED);
-        } catch (Exception e) {
+            Optional<User> userData = userRepo.findById(userId);
+            if (userData.isPresent()) {
+                User associatedUser = userData.get();
+                playlist.setUser(associatedUser);
+
+                playlistRepo.save(playlist);
+                return new ResponseEntity<>(playlist, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY); // user w/ input userId doesn't exist in db
+            }
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

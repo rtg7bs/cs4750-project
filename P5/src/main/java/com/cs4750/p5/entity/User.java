@@ -1,9 +1,13 @@
 package com.cs4750.p5.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -31,9 +35,13 @@ public class User {
     @Column(name="date_joined")
     private LocalDate dateJoined;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) // referenced by Artist entity
     @JsonBackReference
     Artist artist;
+
+    @OneToMany(mappedBy = "owningUser", cascade = CascadeType.ALL) // referenced by Playlist entity
+    @JsonIgnore
+    private List<Playlist> playlists = new ArrayList<>();
 
     // add fkey mapping for planid if implemented (hard-coded default plan_id = 1 for now)
 
@@ -110,5 +118,13 @@ public class User {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
     }
 }

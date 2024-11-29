@@ -14,14 +14,10 @@ import jakarta.persistence.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "playlistId")
 @Table(name = "playlist")
 public class Playlist {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "playlist_id", nullable=false)
     private Integer playlistId;
-
-    @Column(name = "user_id", nullable=false)
-    private Integer userId;
 
     @Column(name = "playlist_name", nullable=false)
     private String playlistName;
@@ -45,6 +41,10 @@ public class Playlist {
     @Column(name = "status")
     private String status;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // user_id col in playlist tb references user_id col in user tb
+    private User owningUser;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "playlist_contains",
@@ -56,15 +56,15 @@ public class Playlist {
 
     public Playlist() {}
 
-    public Playlist(Integer playlistId, Integer userId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status, List<Song> playlistSongs) {
+    public Playlist(Integer playlistId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status, User owningUser, List<Song> playlistSongs) {
         this.playlistId = playlistId;
-        this.userId = userId;
         this.playlistName = playlistName;
         this.creationDate = creationDate;
         this.numOfSongs = numOfSongs;
         this.duration = duration;
         this.description = description;
         this.status = status;
+        this.owningUser = owningUser;
         this.playlistSongs = playlistSongs;
     }
 
@@ -72,10 +72,6 @@ public class Playlist {
     public Integer getPlaylistId() { return playlistId; }
 
     public void setPlaylistId(Integer playlistId) { this.playlistId = playlistId; }
-
-    public Integer getUserId() { return userId; }
-
-    public void setUserId(Integer userId) { this.userId = userId; }
 
     public String getPlaylistName() { return playlistName; }
 
@@ -101,6 +97,10 @@ public class Playlist {
 
     public void setStatus(String status) { this.status = status; }
 
+    public User getUser() { return owningUser; }
+
+    public void setUser(User owningUser) { this.owningUser = owningUser; }
+
     public List<Song> getPlaylistSongs() { return playlistSongs; }
 
     public void setPlaylistSongs(List<Song> songs) { this.playlistSongs = songs; }
@@ -109,7 +109,7 @@ public class Playlist {
     public String toString() {
         return "Playlist{" +
                 "playlistId=" + playlistId +
-                ", userId=" + userId +
+                ", user =" + owningUser +
                 ", playlistName='" + playlistName + '\'' +
                 ", creationDate=" + creationDate +
                 ", numOfSongs=" + numOfSongs +

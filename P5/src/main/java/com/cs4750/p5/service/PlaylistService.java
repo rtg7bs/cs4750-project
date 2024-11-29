@@ -7,7 +7,7 @@ import com.cs4750.p5.entity.Playlist;
 import com.cs4750.p5.entity.Song;
 
 public interface PlaylistService {
-    public abstract ResponseEntity<Playlist> createPlaylist(Playlist playlist);
+    public abstract ResponseEntity<Playlist> createPlaylist(Playlist playlist, Integer userId);
     public abstract ResponseEntity<List<Playlist>> getAllPlaylists();
     public abstract ResponseEntity<Playlist> getPlaylist(Integer id);
     public abstract ResponseEntity<List<Song>> getPlaylistSongs(Integer id);
