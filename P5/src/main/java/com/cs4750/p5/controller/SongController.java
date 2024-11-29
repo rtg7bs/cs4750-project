@@ -1,105 +1,49 @@
 package com.cs4750.p5.controller;
 
 import com.cs4750.p5.entity.Song;
-import com.cs4750.p5.repository.SongRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.cs4750.p5.service.SongService;
 
-import java.util.ArrayList;
-//import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
-@CrossOrigin
+// @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/song")
+
 public class SongController {
+        private final SongService service;
 
-    @Autowired
-    SongRepository songRepository;
 
-    @GetMapping("/songs")
-    public ResponseEntity<List<Song>> getAllSongs(@RequestParam(required = false) String title) {
-        try {
-            List<Song> songs = new ArrayList<>();
-
-            if (title == null) { // i dont think a title can be null, but followingh her code
-                songs.addAll(songRepository.findAll());
-            }
-            else {
-                songs.addAll(songRepository.findByTitleContaining(title));
-            }
-            if (songs.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(songs, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public SongController(SongService service) {
+        this.service = service;
     }
 
-    @GetMapping("/songs/{id}")
-    public ResponseEntity<Song> getSongById(@PathVariable("id") Integer id) {
-        Optional<Song> songData = songRepository.findById(id);
 
-//        if (songData.isPresent()) {
-//            return new ResponseEntity<>(songData.get(), HttpStatus.OK); // Song found, return with OK
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Song not found, return NOT_FOUND
-//        }
-        // Song found, return with OK
-        // Song not found, return NOT_FOUND
-        return songData.map(song -> new ResponseEntity<>(song, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping("/songs")
-    public ResponseEntity<Song> createSong(@RequestBody Song song) {
-        try {
-            Song _song = songRepository
-                    .save(new Song(song.getSongId(), song.getTitle(), song.getDuration(), song.getReleaseDate()));
-            return new ResponseEntity<>(_song, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    @GetMapping("")
+        public ResponseEntity<List<Song>> getAllSongs() {
+            return service.getAllSongs();
         }
-    }
 
-    @PutMapping("/songs/{id}")
-    public ResponseEntity<Song> updateSong(@PathVariable("id") Integer id, @RequestBody Song song) {
-        Optional<Song> songData = songRepository.findById(id);
 
-        if (songData.isPresent()) {
-            Song _song = songData.get();
-            _song.setTitle(song.getTitle());
-            _song.setDuration(song.getDuration());
-            _song.setReleaseDate(song.getReleaseDate());
-
-            return new ResponseEntity<>(songRepository.save(_song), HttpStatus.OK); // Update song and return updated data
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // If song doesn't exist, return NOT_FOUND
+        @PostMapping("/create/{user_id}")
+        public ResponseEntity<Song> createSong(@RequestBody Song song) { // , @PathVariable Integer user_id
+            return service.createSong(song);
         }
-    }
 
-    @DeleteMapping("/songs/{id}")
-        public ResponseEntity<HttpStatus> deleteSong(@PathVariable("id") Integer id) {
-        try {
-            songRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    @DeleteMapping("/songs")
-    public ResponseEntity<HttpStatus> deleteAllSongs() {
-        try {
-            songRepository.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        @GetMapping("/{songId}")
+        public ResponseEntity<Song> getSongById(@PathVariable Integer songId) {
+            return service.getSongById(songId);
         }
+
+        @PutMapping("/update/{songId}")
+        public ResponseEntity<Song> updateSong(@PathVariable Integer songId, @RequestBody Song newSong) {
+            return service.updateSong(songId, newSong);
+        }
+
+        @DeleteMapping("/delete/{songId}")
+        public ResponseEntity<Song> deleteSong(@PathVariable Integer songId) {
+            return service.deleteSong(songId);
     }
 }
