@@ -4,17 +4,13 @@ import java.util.Optional;
 import java.util.List;
 
 import com.cs4750.p5.entity.Playlist;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.repository.PlaylistRepository;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
@@ -55,6 +51,19 @@ public class PlaylistServiceImpl implements PlaylistService {
         }
     }
 
+    public ResponseEntity<List<Song>> getPlaylistSongs(Integer id) {
+        try {
+            Optional<Playlist> playlistData = repo.findById(id);
+            if (playlistData.isPresent()) {
+                return new ResponseEntity<>(playlistData.get().getSongs(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public ResponseEntity<Playlist> updatePlaylist(Integer id, Playlist playlist) {
         Optional<Playlist> playlistData = repo.findById(id);
 
@@ -85,5 +94,4 @@ public class PlaylistServiceImpl implements PlaylistService {
         }
 
     }
-
 }

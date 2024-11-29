@@ -1,9 +1,11 @@
 package com.cs4750.p5.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 //import javax.validation.constraints.Min;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "song")
@@ -24,6 +26,10 @@ public class Song {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "release_date", nullable = false)
     private Date releaseDate;
+
+    @ManyToMany(mappedBy = "songs") // referenced by Playlist entity
+    @JsonBackReference
+    private List<Playlist> playlists;
 
     public Song() {}
 
@@ -65,6 +71,14 @@ public class Song {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
     }
 
     @Override

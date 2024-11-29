@@ -1,9 +1,9 @@
 package com.cs4750.p5.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.cs4750.p5.entity.Playlist;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.service.PlaylistService;
 
 import org.springframework.http.ResponseEntity;
@@ -33,6 +33,10 @@ public class PlaylistController {
         return service.getPlaylist(id);
     }
 
+    @GetMapping("/{id}/songs")
+    public ResponseEntity<List<Song>> getPlaylistSongs(@PathVariable("id") Integer id) { 
+        return service.getPlaylistSongs(id);
+    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Playlist> updatePlaylist(@PathVariable("id") Integer id, @RequestBody Playlist playlist) {
