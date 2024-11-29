@@ -59,7 +59,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         try {
             Optional<Playlist> playlistData = playlistRepo.findById(id);
             if (playlistData.isPresent()) {
-                return new ResponseEntity<>(playlistData.get().getSongs(), HttpStatus.OK);
+                return new ResponseEntity<>(playlistData.get().getPlaylistSongs(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -107,7 +107,7 @@ public class PlaylistServiceImpl implements PlaylistService {
                 if (songData.isPresent()) {
                     Playlist curPlaylist = playlistData.get();
                     Song addedSong = songData.get();
-                    curPlaylist.getSongs().add(addedSong);
+                    curPlaylist.getPlaylistSongs().add(addedSong);
                     return new ResponseEntity<>(playlistRepo.save(curPlaylist), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND); // song not in db
@@ -127,8 +127,8 @@ public class PlaylistServiceImpl implements PlaylistService {
             if (playlistData.isPresent()) {
                 Playlist curPlaylist = playlistData.get();
                 Song removedSong = songData.get();
-                if (curPlaylist.getSongs().contains(removedSong)) {
-                    curPlaylist.getSongs().remove(removedSong);
+                if (curPlaylist.getPlaylistSongs().contains(removedSong)) {
+                    curPlaylist.getPlaylistSongs().remove(removedSong);
                     return new ResponseEntity<>(playlistRepo.save(curPlaylist), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND); // song not in playlist

@@ -1,16 +1,20 @@
 package com.cs4750.p5.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
-//import javax.validation.constraints.Min;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "songId")
 @Table(name = "song")
 public class Song {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "song_id")
@@ -19,7 +23,6 @@ public class Song {
     @Column(name = "title", nullable = false, length = 254)
     private String title;
 
-//    @Min(1)
     @Column(name = "duration")
     private Integer duration;
 
@@ -27,17 +30,23 @@ public class Song {
     @Column(name = "release_date", nullable = false)
     private Date releaseDate;
 
-    @ManyToMany(mappedBy = "songs") // referenced by Playlist entity
-    @JsonBackReference
-    private List<Playlist> playlists;
+    @ManyToMany(mappedBy = "playlist_songs") // referenced by Playlist entity
+    @JsonIgnore
+    private List<Playlist> playlists = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "album_songs") // referenced by Album entity
+    @JsonIgnore
+    private List<Album> albums = new ArrayList<>();
 
     public Song() {}
 
-    public Song(Integer songId, String title, Integer duration, Date releaseDate) {
+    public Song(Integer songId, String title, Integer duration, Date releaseDate, List<Playlist> playlists, List<Album> albums) {
         this.songId = songId;
         this.title = title;
         this.duration = duration;
         this.releaseDate = releaseDate;
+        this.playlists = playlists;
+        this.albums = albums;
     }
 
     // Getters and setters
@@ -79,6 +88,14 @@ public class Song {
 
     public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 
     @Override

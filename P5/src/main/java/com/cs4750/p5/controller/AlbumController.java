@@ -1,6 +1,7 @@
 package com.cs4750.p5.controller;
 
 import com.cs4750.p5.entity.Album;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.service.AlbumService;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class AlbumController {
     @GetMapping("/{albumId}")
     public ResponseEntity<Album> getAlbum(@PathVariable Integer albumId) { 
         return service.getAlbum(albumId);
+    }
+
+    @GetMapping("/{albumId}/songs")
+    public ResponseEntity<List<Song>> getAlbumSongs(@PathVariable Integer albumId) { 
+        return service.getAlbumSongs(albumId);
     }
 
     @PutMapping("/update/{albumId}")

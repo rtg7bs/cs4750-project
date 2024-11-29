@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cs4750.p5.entity.Album;
 import com.cs4750.p5.entity.Artist;
+import com.cs4750.p5.entity.Song;
 import com.cs4750.p5.repository.AlbumRepository;
 import com.cs4750.p5.repository.ArtistRepository;
 
@@ -59,6 +60,19 @@ public class AlbumServiceImpl implements AlbumService {
         } else {
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
+    }
+
+    public ResponseEntity<List<Song>> getAlbumSongs(Integer albumId) {
+        try {
+            Optional<Album> albumData = albumRepository.findById(albumId);
+            if (albumData.isPresent()) {
+                return new ResponseEntity<>(albumData.get().getAlbumSongs(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Album> updateAlbum(Integer albumId, Album newAlbum) {

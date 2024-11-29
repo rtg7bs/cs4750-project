@@ -3,11 +3,15 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "playlistId")
 @Table(name = "playlist")
 public class Playlist {
 
@@ -42,19 +46,17 @@ public class Playlist {
     private String status;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference
     @JoinTable(
         name = "playlist_contains",
         joinColumns = @JoinColumn(name = "playlist_id"), // joinColumns refers to fkey cols in the cur entity
         inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
     )
-    private List<Song> songs = new ArrayList<>();
+    @JsonIgnore
+    private List<Song> playlist_songs = new ArrayList<>();
 
-    public Playlist() {
+    public Playlist() {}
 
-    }
-
-    public Playlist(Integer playlistId, Integer userId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status) {
+    public Playlist(Integer playlistId, Integer userId, String playlistName, Date creationDate, Integer numOfSongs, Integer duration, String description, String status, List<Song> playlist_songs) {
         this.playlistId = playlistId;
         this.userId = userId;
         this.playlistName = playlistName;
@@ -63,6 +65,7 @@ public class Playlist {
         this.duration = duration;
         this.description = description;
         this.status = status;
+        this.playlist_songs = playlist_songs;
     }
 
     // getters and setters
@@ -98,9 +101,9 @@ public class Playlist {
 
     public void setStatus(String status) { this.status = status; }
 
-    public List<Song> getSongs() { return songs; }
+    public List<Song> getPlaylistSongs() { return playlist_songs; }
 
-    public void setSongs(List<Song> songs) { this.songs = songs; }
+    public void setPlaylistSongs(List<Song> songs) { this.playlist_songs = songs; }
 
     @Override
     public String toString() {

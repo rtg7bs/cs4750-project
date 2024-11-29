@@ -1,9 +1,16 @@
 package com.cs4750.p5.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "albumId")
 @Table(name = "album")
 public class Album {
     @Id
@@ -29,15 +36,25 @@ public class Album {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id") // user_id col in album tb references user_id col in artist tb
     private Artist artist;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "album_has",
+        joinColumns = @JoinColumn(name = "album_id"), // joinColumns refers to fkey cols in the cur entity
+        inverseJoinColumns = @JoinColumn(name = "song_id") // inverseJoinColumns refers to fkey cols in the related entity
+    )
+    @JsonIgnore
+    private List<Song> album_songs = new ArrayList<>();
+
     Album() {}
 
-    Album(Integer albumId, Artist artist, String albumName, Integer numOfSongs, Integer duration, LocalDate releaseDate) {
+    Album(Integer albumId, String albumName, Integer numOfSongs, Integer duration, LocalDate releaseDate, Artist artist, List<Song> album_songs) {
         this.albumId = albumId;
-        this.artist = artist;
         this.albumName = albumName;
         this.numOfSongs = numOfSongs;
         this.duration = duration;
         this.releaseDate = releaseDate;
+        this.artist = artist;
+        this.album_songs = album_songs;
     }
 
     public Integer getAlbumId() {
@@ -46,14 +63,6 @@ public class Album {
 
     public void setAlbumId(Integer albumId) {
         this.albumId = albumId;
-    }
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
     }
 
     public String getAlbumName() {
@@ -86,5 +95,21 @@ public class Album {
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public List<Song> getAlbumSongs() {
+        return album_songs;
+    }
+
+    public void setAlbumSongs(List<Song> songs) {
+        this.album_songs = songs;
     }
 }
